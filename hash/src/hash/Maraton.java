@@ -1,10 +1,8 @@
 package hash;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 //참가선수 participant 완주선수 completion 
 //완주하지 못한선수 이름 return
@@ -15,17 +13,18 @@ import java.util.Scanner;
 //참가자는 동명이인 있을 수 있다.
 public class Maraton {
 
-	public static List<String> solution() {
-		List<String> participant = new ArrayList<>();
-		List<String> completion = new ArrayList<>();
-
-		Scanner sc = new Scanner(System.in);
-		for (int i = 0; i < 3; i++) {
-			participant.add(sc.next());
-		}
-		int check = (int)(Math.random()*participant.size());
-		completion.add(participant.remove(check));
-		return completion;
+	//정확성50 효율50
+	public static String solution(String[] participant, String[] completion) {
+		Arrays.sort(participant);
+        Arrays.sort(completion);
+	    
+        int i;
+        for(i=0; i<participant.length-1; i++)
+        	//참가자명단과 완주자명단이 같지 않을때의, 해당 참가자가 미완주자
+            if(!participant[i].equals(completion[i])) return participant[i];    
+        
+        //마지막참가자가 미완주자
+		return participant[i];
 	}
 	
 	public static String solution2(String[] participant,String[] completion) {
@@ -44,7 +43,7 @@ public class Maraton {
 				answer = player;
 		}
 		
-		//방법2. get메소드보다는 호출비용이 절감된다.
+		//방법2. get메소드보다는 호출비용이 절감된다.	정확성50 효율성50
 		for(Map.Entry<String,Integer> entry : hm.entrySet()) {
 			if(entry.getValue() != 0)
 				answer = entry.getKey();

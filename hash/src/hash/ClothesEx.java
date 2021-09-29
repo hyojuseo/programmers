@@ -1,9 +1,7 @@
 package hash;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
+import java.util.*;
+import static java.util.stream.Collectors.*;
 //스파이들은 매일 다른 옷을 조합하여 입어 위장한다.
 //예를 들어 
 //		얼굴 - 동그란안경, 검정 선글라스
@@ -36,7 +34,16 @@ public class ClothesEx {
 		
 		while(it.hasNext())
 			answer *= it.next().intValue() +1 ;*/
+		
 		return answer-1;
+	}
+	
+	public static int solution2(String[][] clothes) {
+		return Arrays.stream(clothes)
+				.collect(groupingBy(p->p[1], mapping(p->p[0], counting())))
+				.values()
+				.stream()
+				.collect(reducing(1L, (x,y)->x*(y+1))).intValue() - 1;
 	}
 	
 	public static void main(String[] args) {
